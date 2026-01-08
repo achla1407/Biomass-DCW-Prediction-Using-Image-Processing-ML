@@ -2,17 +2,14 @@ import os
 import pandas as pd
 from extract_features import extract_features
 
-# -----------------------------------------
-# PATHS
-# -----------------------------------------
+
 
 IMAGE_ROOT = "images"
 DCW_CSV = "dcw_values.csv"
 OUTPUT_CSV = "final_dataset.csv"
 
-# -----------------------------------------
+
 # LOAD DCW VALUES
-# -----------------------------------------
 
 dcw_df = pd.read_csv(DCW_CSV)
 
@@ -23,9 +20,8 @@ dcw_lookup = {
     for _, row in dcw_df.iterrows()
 }
 
-# -----------------------------------------
 # BUILD DATASET
-# -----------------------------------------
+
 
 records = []
 
@@ -72,9 +68,8 @@ for concentration in os.listdir(IMAGE_ROOT):
             except Exception as e:
                 print(f"❌ Error processing {img_path}: {e}")
 
-# -----------------------------------------
 # SAVE FINAL DATASET
-# -----------------------------------------
+
 
 dataset_df = pd.DataFrame(records)
 dataset_df.to_csv(OUTPUT_CSV, index=False)
@@ -82,3 +77,4 @@ dataset_df.to_csv(OUTPUT_CSV, index=False)
 print("✅ Dataset built successfully!")
 print(f"📄 Saved as: {OUTPUT_CSV}")
 print(f"🔢 Total samples: {len(dataset_df)}")
+
