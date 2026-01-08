@@ -2,9 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ---------------------------------------------
 # Preprocessing helpers (same as extract_features)
-# ---------------------------------------------
 
 def crop_bottom_roi(img, bottom_ratio=0.4):
     h, w = img.shape[:2]
@@ -30,17 +28,16 @@ def preprocess(img):
     return roi, L_blur
 
 
-# ---------------------------------------------
 # Segmentation visualizer
-# ---------------------------------------------
+
 
 def visualize_segmentation(image_path):
     img = cv2.imread(image_path)
     roi, L = preprocess(img)
 
-    # -------------------
+  
     # Pellet (blob) mask
-    # -------------------
+  
     _, pellet_mask = cv2.threshold(
         L, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
     )
@@ -50,16 +47,15 @@ def visualize_segmentation(image_path):
         pellet_mask, cv2.MORPH_OPEN, kernel
     )
 
-    # -------------------
+    
     # Sediment mask
-    # -------------------
+    
     _, sediment_mask = cv2.threshold(
         L, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
     )
 
-    # -------------------
-    # Plot everything
-    # -------------------
+    # Plotting everything
+
     plt.figure(figsize=(12, 8))
 
     plt.subplot(2, 2, 1)
@@ -85,10 +81,8 @@ def visualize_segmentation(image_path):
     plt.tight_layout()
     plt.show()
 
-
-# ---------------------------------------------
 # TEST
-# ---------------------------------------------
 
 if __name__ == "__main__":
     visualize_segmentation("images/1.2/day3/image_1.jpeg")
+
