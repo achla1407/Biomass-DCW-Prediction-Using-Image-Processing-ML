@@ -8,27 +8,26 @@ import os
 # Import your feature extraction function
 from extract_features import extract_features
 
-# -------------------------------
 # Page config
-# -------------------------------
+
 st.set_page_config(
     page_title="DCW Prediction App",
     page_icon="🧫",
     layout="centered"
 )
 
-# -------------------------------
+
 # Load trained model
-# -------------------------------
+
 @st.cache_resource
 def load_model():
     return joblib.load("dcw_random_forest_model.pkl")
 
 model = load_model()
 
-# -------------------------------
+
 # UI Header
-# -------------------------------
+
 st.markdown(
     """
     <h1 style='text-align: center;'>🧫 Dry Cell Weight (DCW) Predictor</h1>
@@ -41,9 +40,8 @@ st.markdown(
 
 st.divider()
 
-# -------------------------------
 # Sidebar inputs
-# -------------------------------
+
 st.sidebar.header("🧪 Experimental Parameters")
 
 day = st.sidebar.slider(
@@ -61,9 +59,9 @@ concentration = st.sidebar.selectbox(
     help="Initial substrate concentration"
 )
 
-# -------------------------------
+
 # Image uploader
-# -------------------------------
+
 st.subheader("📷 Upload Culture Image")
 
 uploaded_file = st.file_uploader(
@@ -71,9 +69,9 @@ uploaded_file = st.file_uploader(
     type=["jpg", "jpeg", "png"]
 )
 
-# -------------------------------
+
 # Prediction logic
-# -------------------------------
+
 if uploaded_file is not None:
     # Show image
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
@@ -84,9 +82,9 @@ if uploaded_file is not None:
         tmp_path = tmp.name
 
     try:
-        # -------------------------------
+      
         # Feature extraction
-        # -------------------------------
+       
         features = extract_features(tmp_path)
 
         feature_df = pd.DataFrame([features])
@@ -99,9 +97,9 @@ if uploaded_file is not None:
         model_features = model.feature_names_in_
         feature_df = feature_df[model_features]
 
-        # -------------------------------
+       
         # Prediction
-        # -------------------------------
+
         prediction = model.predict(feature_df)[0]
 
         st.divider()
@@ -118,7 +116,7 @@ if uploaded_file is not None:
 
         st.success("Prediction completed successfully ✔")
 
-        # Optional: show extracted features
+        # show extracted features
         with st.expander("🔍 View extracted features"):
             st.dataframe(feature_df.T, use_container_width=True)
 
@@ -136,3 +134,4 @@ st.divider()
 st.caption(
     "⚠ This is a research prototype. Predictions are approximate and depend on imaging conditions."
 )
+
