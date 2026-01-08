@@ -1,9 +1,8 @@
 import cv2
 import numpy as np
 
-# -------------------------------------------------
 # Utility functions
-# -------------------------------------------------
+
 
 def crop_bottom_roi(img, bottom_ratio=0.4):
     """
@@ -44,9 +43,9 @@ def preprocess_image(img):
     return roi, L_blur, B
 
 
-# -------------------------------------------------
+
 # Feature extractors
-# -------------------------------------------------
+
 
 def compute_blob_features(L_img):
     """
@@ -139,9 +138,8 @@ def compute_universal_features(L_img):
     }
 
 
-# -------------------------------------------------
 # MASTER FUNCTION
-# -------------------------------------------------
+
 
 def extract_features(image_path):
     """
@@ -168,12 +166,13 @@ def extract_features(image_path):
     return features
 
 
-# -------------------------------------------------
-# TEST (optional)
-# -------------------------------------------------
+
+# TEST 
+
 
 if __name__ == "__main__":
     test_img = "images/1.2/day3/image_1.jpeg"
     feats = extract_features(test_img)
     for k, v in feats.items():
         print(f"{k}: {v}")
+
