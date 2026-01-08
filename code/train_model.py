@@ -7,18 +7,17 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
-# =========================
 # 1. LOAD DATA
-# =========================
+
 df = pd.read_csv("final_dataset_clean.csv")
 
 print("\nDataset shape:", df.shape)
 print("\nColumns:", df.columns.tolist())
 
 
-# =========================
+
 # 2. BASIC CLEANING
-# =========================
+
 # Drop non-feature columns if still present
 df = df.drop(columns=["image_name"], errors="ignore")
 
@@ -30,9 +29,9 @@ num_cols = df.select_dtypes(include="number").columns
 df[num_cols] = df[num_cols].round(3)
 
 
-# =========================
+
 # 3. FEATURE / TARGET SPLIT
-# =========================
+
 TARGET = "dcw_g_per_l"
 
 X = df.drop(columns=[TARGET])
@@ -41,9 +40,8 @@ y = df[TARGET]
 print("\nNumber of features:", X.shape[1])
 
 
-# =========================
 # 4. TRAIN / TEST SPLIT
-# =========================
+
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -52,9 +50,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 
-# =========================
 # 5. MODEL DEFINITION
-# =========================
+
 model = RandomForestRegressor(
     n_estimators=300,
     max_depth=None,
@@ -64,15 +61,13 @@ model = RandomForestRegressor(
 )
 
 
-# =========================
+
 # 6. TRAIN MODEL
-# =========================
+
 model.fit(X_train, y_train)
 
-
-# =========================
 # 7. EVALUATION
-# =========================
+
 y_pred = model.predict(X_test)
 
 mae = mean_absolute_error(y_test, y_pred)
@@ -86,9 +81,9 @@ print(f"RMSE : {rmse:.3f} g/L")
 print(f"R²   : {r2:.3f}")
 
 
-# =========================
+
 # 8. CROSS VALIDATION (SMALL DATA SAFE)
-# =========================
+
 cv_scores = cross_val_score(
     model,
     X,
@@ -101,9 +96,9 @@ print("\nCross-Validation MAE:", np.abs(cv_scores).round(3))
 print("Mean CV MAE:", np.abs(cv_scores.mean()).round(3))
 
 
-# =========================
+
 # 9. FEATURE IMPORTANCE
-# =========================
+
 importances = model.feature_importances_
 feature_importance_df = pd.DataFrame({
     "feature": X.columns,
@@ -126,10 +121,11 @@ plt.tight_layout()
 plt.show()
 
 
-# =========================
+
 # 10. SAVE MODEL
-# =========================
+
 import joblib
 joblib.dump(model, "dcw_random_forest_model.pkl")
 
 print("\n✅ Model saved as dcw_random_forest_model.pkl")
+
