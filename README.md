@@ -133,7 +133,7 @@ App also:
 
 ---
 
-## ✔️ Advantages
+## Advantages
 
 * Fast & non-invasive
 * No wet-lab steps required after training
