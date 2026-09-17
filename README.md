@@ -162,7 +162,8 @@ Also I am working on the accuracy and also the dataset in more such batches , th
 
 ##  Credits
 
-**Project & Experiments:** Achala Pandey 
+**Project & Experiments:** Achala Pandey ,
+Phd Scholar Ashish Yadav
 **Guidance :** Dr. Rupika Sinha 
 
 ---
